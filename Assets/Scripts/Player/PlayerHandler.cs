@@ -1,67 +1,71 @@
 using UnityEngine;
 
-public class PlayerHandler : MonoBehaviour
+public class CarHandler : MonoBehaviour
 {
-    [SerializeField] 
-    private Rigidbody rb;
-
     [SerializeField]
-    private float acceleration = 10f;
+    Rigidbody rb;
 
-    [SerializeField]
-    private float brakeForce = 5f;
+    // Multipliers
+    float accelerationMultiplier = 3f;
+    float breaksMultiplier = 15f;
+    float steeringMultiplier = 5f;
 
-    [SerializeField]
-    private float steeringMultiplier = 5f;
+    // Input
+    Vector2 input = Vector2.zero;
 
-    private Vector2 input = Vector2.zero;
+    // Start is called before the first frame update
+    void Start()
+    {
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    // Physics update
     private void FixedUpdate()
     {
-        // ACCELERATE
+        // Apply Acceleration
         if (input.y > 0)
-        {
             Accelerate();
-        }
-        // BRAKE / SLOW DOWN
-        else if (input.y < 0)
-        {
-            Brake();
-        }
         else
-        {
-            rb.drag = 1f; // natural slow down
-        }
+            rb.linearDamping = 0.2f;
 
-        // STEERING
+        // Apply Brakes
+        if (input.y < 0)
+            Brake();
+
+        // Apply Steering
         Steer();
     }
 
-    private void Accelerate()
+    void Accelerate()
     {
-        rb.drag = 0f;
-        rb.AddForce(transform.forward * acceleration * input.y, ForceMode.Acceleration);
+        rb.linearDamping = 0f;
+        rb.AddForce(rb.transform.forward * accelerationMultiplier * input.y);
     }
 
-    private void Brake()
-{
-    // Check forward speed using linearVelocity.z instead of velocity.z
-    if (rb.linearVelocity.z <= 0) return;
-
-    rb.AddForce(-transform.forward * brakeForce * Mathf.Abs(input.y), ForceMode.Acceleration);
-}
-
-
-    private void Steer()
+    void Brake()
     {
-        if (Mathf.Abs(input.x) > 0.01f)
+        // Don't brake unless we are going forward
+        if (rb.linearVelocity.z <= 0)
+            return;
+
+        rb.AddForce(rb.transform.forward * breaksMultiplier * input.y);
+    }
+
+    void Steer()
+    {
+        if (Mathf.Abs(input.x) > 0)
         {
-            rb.AddForce(transform.right * steeringMultiplier * input.x, ForceMode.Acceleration);
+            rb.AddForce(rb.transform.right * steeringMultiplier * input.x);
         }
     }
 
     public void SetInput(Vector2 inputVector)
     {
-        input = inputVector.normalized;
+        inputVector.Normalize();
+        input = inputVector;
     }
 }
