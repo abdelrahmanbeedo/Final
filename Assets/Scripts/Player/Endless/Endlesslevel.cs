@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EndlessLevelHandler : MonoBehaviour
 {
-    [SerializeField]
-    GameObject[] sectionsPrefabs;
+    [SerializeField] GameObject[] sectionsPrefabs;
 
     GameObject[] sectionsPool = new GameObject[20];
     GameObject[] sections = new GameObject[10];
@@ -14,7 +12,7 @@ public class EndlessLevelHandler : MonoBehaviour
 
     WaitForSeconds waitFor100ms = new WaitForSeconds(0.1f);
 
-    const float sectionLength = 20;
+    const float sectionLength = 20f;
 
     void Start()
     {
@@ -22,31 +20,24 @@ public class EndlessLevelHandler : MonoBehaviour
 
         int prefabIndex = 0;
 
-        //Create a pool for our modular sections
+        // Create pool
         for (int i = 0; i < sectionsPool.Length; i++)
         {
             sectionsPool[i] = Instantiate(sectionsPrefabs[prefabIndex]);
             sectionsPool[i].SetActive(false);
 
             prefabIndex++;
-
-            //Loop the prefab index if we run out of prefabs
-            if (prefabIndex >= sectionsPrefabs.Length - 1)
+            if (prefabIndex >= sectionsPrefabs.Length)
                 prefabIndex = 0;
         }
 
-        //Add the first sections to the road
+        // Spawn initial sections
         for (int i = 0; i < sections.Length; i++)
         {
-            //Get a random section
-            GameObject randomSection = GetRandomSectionFromPool();
-
-            //Move it into position and set it to active
-            randomSection.transform.position = new Vector3(sectionsPool[i].transform.position.x, 0, i * sectionLength);
-            randomSection.SetActive(true);
-
-            //Set the section in the array
-            sections[i] = randomSection;
+            GameObject newSection = GetRandomAvailableSection();
+            newSection.transform.position = new Vector3(0, 0, i * sectionLength);
+            newSection.SetActive(true);
+            sections[i] = newSection;
         }
 
         StartCoroutine(UpdateLessOftenCO());
@@ -65,38 +56,42 @@ public class EndlessLevelHandler : MonoBehaviour
     {
         for (int i = 0; i < sections.Length; i++)
         {
-            //Check if section is too far behind
             if (sections[i].transform.position.z < playerCarTransform.position.z - sectionLength)
             {
-                //Store the position of the section and disable it
-                Vector3 lastSectionPosition = sections[i].transform.position;
+                Vector3 oldPos = sections[i].transform.position;
+
                 sections[i].SetActive(false);
 
-                //Get new section & enable it & move it forward
-                sections[i] = GetRandomSectionFromPool();
+                GameObject newSection = GetRandomAvailableSection();
+                newSection.transform.position = new Vector3(0, 0, oldPos.z + sectionLength * sections.Length);
+                newSection.SetActive(true);
 
-                //Move the new section into place and active it
-                sections[i].transform.position = new Vector3(lastSectionPosition.x, 0, lastSectionPosition.z + sectionLength * sections.Length);
+                sections[i] = newSection;
             }
         }
     }
 
-    GameObject GetRandomSectionFromPool()
+    GameObject GetRandomAvailableSection()
     {
-        //Pick a random index and hope that it is available
-        int randomIndex = Random.Range(0, sectionsPool.Length);
-
-        bool isNewSectionFound = false;
-
-        while (!isNewSectionFound)
+        // First try to find an inactive one randomly
+        for (int attempt = 0; attempt < 30; attempt++)
         {
-            //Check if the section is not active, in that case we've found a section
+            int randomIndex = Random.Range(0, sectionsPool.Length);
+
             if (!sectionsPool[randomIndex].activeInHierarchy)
-            {
-                isNewSectionFound = true;
-            }
+                return sectionsPool[randomIndex];
         }
 
-        return sectionsPool[randomIndex];
+        // If all are active (unlikely), pick the first inactive
+        for (int i = 0; i < sectionsPool.Length; i++)
+        {
+            if (!sectionsPool[i].activeInHierarchy)
+                return sectionsPool[i];
+        }
+
+        // If ALL are active (should never happen)
+        // Return a random one anyway (fallback)
+        Debug.LogWarning("All sections are active! Returning a random one.");
+        return sectionsPool[Random.Range(0, sectionsPool.Length)];
     }
 }
