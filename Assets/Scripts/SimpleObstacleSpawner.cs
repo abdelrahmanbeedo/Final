@@ -3,8 +3,10 @@ using UnityEngine;
 public class SimpleObstacleSpawner : MonoBehaviour
 {
     public ObstacleData[] obstacles;
-    public float spawnDistanceAhead = 40f;
-    public float spawnInterval = 2f;
+    public float spawnDistanceAhead = 20f;
+    public float spawnInterval = 0.6f;
+    public float roadWidth = 3f; // total road width
+    public float roadY = 0f; // road surface Y position
 
     Transform player;
     float timer;
@@ -26,41 +28,40 @@ public class SimpleObstacleSpawner : MonoBehaviour
     }
 
     void SpawnObstacle()
-{
-    ObstacleData data = obstacles[Random.Range(0, obstacles.Length)];
-
-    if (data == null)
     {
-        Debug.LogError("ObstacleData is NULL");
-        return;
+        ObstacleData data = obstacles[Random.Range(0, obstacles.Length)];
+
+        if (data == null || data.prefab == null)
+        {
+            Debug.LogError("ObstacleData or prefab is NULL");
+            return;
+        }
+
+        Vector3 pos = player.position + Vector3.forward * spawnDistanceAhead;
+
+        // Keep obstacle inside road boundaries
+        float margin = 0.3f; // prevent spawning too close to edges
+        pos.x = Random.Range(-roadWidth / 2 + margin, roadWidth / 2 - margin);
+
+        // Align Y with road
+        pos.y = roadY;
+
+        GameObject obj = Instantiate(data.prefab, pos, Quaternion.identity);
+
+        if (obj == null)
+        {
+            Debug.LogError("Instantiated object is NULL");
+            return;
+        }
+
+        ObstacleSimple obstacle = obj.GetComponent<ObstacleSimple>();
+
+        if (obstacle == null)
+        {
+            Debug.LogError("ObstacleSimple component NOT found on prefab");
+            return;
+        }
+
+        obstacle.Init(data);
     }
-
-    if (data.prefab == null)
-    {
-        Debug.LogError("Prefab inside ObstacleData is NULL");
-        return;
-    }
-
-    Vector3 pos = player.position + Vector3.forward * spawnDistanceAhead;
-    pos.x = Random.Range(-3f, 3f);
-
-    GameObject obj = Instantiate(data.prefab, pos, Quaternion.identity);
-
-    if (obj == null)
-    {
-        Debug.LogError("Instantiated object is NULL");
-        return;
-    }
-
-    ObstacleSimple obstacle = obj.GetComponent<ObstacleSimple>();
-
-    if (obstacle == null)
-    {
-        Debug.LogError("ObstacleSimple component NOT found on prefab");
-        return;
-    }
-
-    obstacle.Init(data);
-}
-
 }
