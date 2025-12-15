@@ -547,8 +547,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 861a47c48ef139040a9e77edf835469d, type: 2}
   spawnDistanceAhead: 40
   spawnInterval: 2
-  roadWidth: 6
-  roadY: 0.5
+  roadWidth: 4
+  roadLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &939899620
 Transform:
   m_ObjectHideFlags: 0

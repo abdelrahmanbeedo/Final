@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 3585681992362197955}
   - component: {fileID: 4362306478844874289}
   - component: {fileID: 7943546258625719971}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 2099460241255030184}
   - component: {fileID: 3066138128709374477}
   - component: {fileID: 966562168722958023}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +411,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 809442040213492515}
-  m_Layer: 0
+  - component: {fileID: 3069071136568342434}
+  m_Layer: 3
   m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,6 +447,27 @@ Transform:
   - {fileID: 7165920337738149460}
   m_Father: {fileID: 1117940894072269252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3069071136568342434
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898111359099980800}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 0.2, z: 26}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1961903481441295776
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +479,7 @@ GameObject:
   - component: {fileID: 1184944225714259738}
   - component: {fileID: 2872768708673423551}
   - component: {fileID: 16581332881030261}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,7 +598,7 @@ GameObject:
   - component: {fileID: 3395097373466783249}
   - component: {fileID: 1779507377068204468}
   - component: {fileID: 4564085746679846270}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +684,7 @@ GameObject:
   - component: {fileID: 1236969408177790063}
   - component: {fileID: 6975935992569738793}
   - component: {fileID: 8745061151580556456}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +770,7 @@ GameObject:
   - component: {fileID: 3305814644246582957}
   - component: {fileID: 1895812523862857992}
   - component: {fileID: 4443839228128128450}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -834,7 +856,7 @@ GameObject:
   - component: {fileID: 5921067320570474490}
   - component: {fileID: 6950665090131298088}
   - component: {fileID: 5585005937134035514}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,7 +942,7 @@ GameObject:
   - component: {fileID: 8069889051252658219}
   - component: {fileID: 5663740287896417925}
   - component: {fileID: 2866862660302062460}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1006,7 +1028,7 @@ GameObject:
   - component: {fileID: 4774537401430713515}
   - component: {fileID: 7574923406376420146}
   - component: {fileID: 273691126167439631}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1092,7 +1114,7 @@ GameObject:
   - component: {fileID: 4562877905598405819}
   - component: {fileID: 647747395058455326}
   - component: {fileID: 3393943471536744404}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1264,7 +1286,7 @@ GameObject:
   - component: {fileID: 7325759757365714069}
   - component: {fileID: 6208837562214124454}
   - component: {fileID: 4962977090291721059}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1350,7 +1372,7 @@ GameObject:
   - component: {fileID: 1017962710135399935}
   - component: {fileID: 159689961449938136}
   - component: {fileID: 647495988354112470}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1434,7 +1456,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5353541895181076384}
-  m_Layer: 0
+  - component: {fileID: 8666071844353988600}
+  m_Layer: 3
   m_Name: Road (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1469,6 +1492,27 @@ Transform:
   - {fileID: 4774537401430713515}
   m_Father: {fileID: 1117940894072269252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8666071844353988600
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935795847814204327}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 0.2, z: 26}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5098053635945824868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,7 +1524,7 @@ GameObject:
   - component: {fileID: 2256952594769289609}
   - component: {fileID: 8034059218982627938}
   - component: {fileID: 1604810150188976124}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1566,7 +1610,7 @@ GameObject:
   - component: {fileID: 4794385158661875439}
   - component: {fileID: 8441654948545767754}
   - component: {fileID: 5963398378261699968}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1652,7 +1696,7 @@ GameObject:
   - component: {fileID: 4696789481470345618}
   - component: {fileID: 8539250075222396471}
   - component: {fileID: 5865223809539980029}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1738,7 +1782,7 @@ GameObject:
   - component: {fileID: 6507874158102024825}
   - component: {fileID: 7926131403196112348}
   - component: {fileID: 5340057279897168150}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1824,7 +1868,7 @@ GameObject:
   - component: {fileID: 8067811544813326140}
   - component: {fileID: 3601959158817047901}
   - component: {fileID: 509479949111012257}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1910,7 +1954,7 @@ GameObject:
   - component: {fileID: 6154662315999121512}
   - component: {fileID: 7117406299160272845}
   - component: {fileID: 4981803726412163847}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1996,7 +2040,7 @@ GameObject:
   - component: {fileID: 6106938825683693181}
   - component: {fileID: 7165208404836082136}
   - component: {fileID: 4939068204689724690}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2082,7 +2126,7 @@ GameObject:
   - component: {fileID: 7636547900227610885}
   - component: {fileID: 6797528670595278496}
   - component: {fileID: 8768890032058372714}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2168,7 +2212,7 @@ GameObject:
   - component: {fileID: 7165920337738149460}
   - component: {fileID: 6115234092564750833}
   - component: {fileID: 8302766654253618491}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2254,7 +2298,7 @@ GameObject:
   - component: {fileID: 679773485812738759}
   - component: {fileID: 4670499123978317698}
   - component: {fileID: 5281894337024166870}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2340,7 +2384,7 @@ GameObject:
   - component: {fileID: 7791709933983840014}
   - component: {fileID: 1997445944840738793}
   - component: {fileID: 7003607079089525223}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2426,7 +2470,7 @@ GameObject:
   - component: {fileID: 3580287466608238609}
   - component: {fileID: 1179088288279771587}
   - component: {fileID: 6466345993287223141}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2512,7 +2556,7 @@ GameObject:
   - component: {fileID: 6006734848886957513}
   - component: {fileID: 7031855492170179594}
   - component: {fileID: 6947932480782422446}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2598,7 +2642,7 @@ GameObject:
   - component: {fileID: 8359778843388768790}
   - component: {fileID: 4876339591156366771}
   - component: {fileID: 7226248031041784185}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road_straight (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

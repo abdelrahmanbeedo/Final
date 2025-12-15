@@ -3,10 +3,12 @@ using UnityEngine;
 public class SimpleObstacleSpawner : MonoBehaviour
 {
     public ObstacleData[] obstacles;
-    public float spawnDistanceAhead = 20f;
-    public float spawnInterval = 0.6f;
-    public float roadWidth = 3f; // total road width
-    public float roadY = 0f; // road surface Y position
+
+    public float spawnDistanceAhead = 40f;
+    public float spawnInterval = 1.5f;
+
+    public float roadWidth = 6f; // total usable road width
+    public LayerMask roadLayer;  // set to "Road" in Inspector
 
     Transform player;
     float timer;
@@ -29,39 +31,39 @@ public class SimpleObstacleSpawner : MonoBehaviour
 
     void SpawnObstacle()
     {
+        if (obstacles.Length == 0) return;
+
         ObstacleData data = obstacles[Random.Range(0, obstacles.Length)];
+        if (data == null || data.prefab == null) return;
 
-        if (data == null || data.prefab == null)
+        // 1️⃣ Z position ahead of player
+        Vector3 spawnPos = player.position + Vector3.forward * spawnDistanceAhead;
+
+        // 2️⃣ Restrict X to road only (NO buildings)
+        float margin = 0.6f;
+        spawnPos.x = Random.Range(
+            -roadWidth / 2f + margin,
+             roadWidth / 2f - margin
+        );
+
+        // 3️⃣ Raycast DOWN to snap to road (perfect Y)
+        spawnPos.y = 50f; // start high above road
+
+        if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 100f, roadLayer))
         {
-            Debug.LogError("ObstacleData or prefab is NULL");
-            return;
+            spawnPos.y = hit.point.y;
+        }
+        else
+        {
+            return; // no road found → don’t spawn
         }
 
-        Vector3 pos = player.position + Vector3.forward * spawnDistanceAhead;
-
-        // Keep obstacle inside road boundaries
-        float margin = 0.3f; // prevent spawning too close to edges
-        pos.x = Random.Range(-roadWidth / 2 + margin, roadWidth / 2 - margin);
-
-        // Align Y with road
-        pos.y = roadY;
-
-        GameObject obj = Instantiate(data.prefab, pos, Quaternion.identity);
-
-        if (obj == null)
-        {
-            Debug.LogError("Instantiated object is NULL");
-            return;
-        }
+        GameObject obj = Instantiate(data.prefab, spawnPos, Quaternion.identity);
 
         ObstacleSimple obstacle = obj.GetComponent<ObstacleSimple>();
-
-        if (obstacle == null)
+        if (obstacle != null)
         {
-            Debug.LogError("ObstacleSimple component NOT found on prefab");
-            return;
+            obstacle.Init(data);
         }
-
-        obstacle.Init(data);
     }
 }
