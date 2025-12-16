@@ -684,6 +684,11 @@ MonoBehaviour:
   - {fileID: 4480434813143305546, guid: 9594643cc271ea54d85e3c553663234a, type: 3}
   - {fileID: 8204408165856506508, guid: fc9089b018036e04eb225fb3568b3e13, type: 3}
   - {fileID: 1136726344880608739, guid: fa00f1731cf62ee40ac515c1e810e0a9, type: 3}
+--- !u!1 &344460370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2686982419682777703, guid: dc8c2427d4e766843b3b93ad9de149ba, type: 3}
+  m_PrefabInstance: {fileID: 1990351067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &362438219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,7 +1379,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 654715952}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2127568841}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &654715952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1418,6 +1435,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1501478452528767407, guid: dc8c2427d4e766843b3b93ad9de149ba, type: 3}
   m_PrefabInstance: {fileID: 1990351067}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &776467301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344460370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef489f4f48bbc004ba20f9d278ea3f9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,7 +2082,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1514994559}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2127568841}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: BackToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1514994559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2836,7 +2877,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1759988197}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2127568840}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1759988197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3025,6 +3078,7 @@ GameObject:
   - component: {fileID: 1862209965}
   - component: {fileID: 1862209964}
   - component: {fileID: 1862209967}
+  - component: {fileID: 1862209969}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3076,7 +3130,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!4 &1862209966
 Transform:
   m_ObjectHideFlags: 0
@@ -3106,6 +3160,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carHandler: {fileID: 1862209964}
+--- !u!64 &1862209969
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862209962}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1952731982
 GameObject:
   m_ObjectHideFlags: 0
@@ -3253,7 +3329,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2686982419682777703, guid: dc8c2427d4e766843b3b93ad9de149ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 776467301}
   m_SourcePrefab: {fileID: 100100000, guid: dc8c2427d4e766843b3b93ad9de149ba, type: 3}
 --- !u!1 &2017055652
 GameObject:
@@ -3337,7 +3416,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2017055655}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2127568841}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2017055655
 MonoBehaviour:
   m_ObjectHideFlags: 0
