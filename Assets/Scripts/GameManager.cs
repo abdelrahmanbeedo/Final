@@ -5,15 +5,20 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Header("UI Panels")]
     public GameObject mainMenu;
     public GameObject gameUI;
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
 
+    [HideInInspector]
     public int score;
+
+    private bool isGameStarted = false;
 
     void Awake()
     {
+        // Singleton pattern
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
@@ -25,67 +30,92 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeScale == 0f) return;
+        if (!isGameStarted || Time.timeScale == 0f) return;
 
+        // Increment score over time
         score += Mathf.RoundToInt(Time.deltaTime * 10f);
 
+        // Pause toggle
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseGame();
+            if (pauseMenu.activeSelf)
+                ResumeGame();
+            else
+                PauseGame();
         }
     }
 
+    // ===== GAME FLOW =====
+
     public void StartGame()
     {
-        score = 0;  // Reset score
+        score = 0;
+        isGameStarted = true;
         Time.timeScale = 1f;
 
-        mainMenu.SetActive(false);   // Hide main menu
-        gameUI.SetActive(true);      // Show game UI
-        pauseMenu.SetActive(false);  // Hide pause menu
-        gameOverMenu.SetActive(false);  // Hide game over menu
+        mainMenu.SetActive(false);
+        gameUI.SetActive(true);
+        pauseMenu.SetActive(false);
+        gameOverMenu.SetActive(false);
 
-        // Optionally, reset player position and other game state here
+        // Reset player position or game state if needed
     }
 
     public void PauseGame()
     {
-        Time.timeScale = 0f;  // Freeze game
-        pauseMenu.SetActive(true);  // Show pause menu
+        if (!isGameStarted) return;
+
+        Time.timeScale = 0f;
+        pauseMenu.SetActive(true);
+        gameUI.SetActive(false); // hide gameplay UI while paused
     }
 
     public void ResumeGame()
     {
-        Time.timeScale = 1f;  // Resume game
-        pauseMenu.SetActive(false);  // Hide pause menu
+        if (!isGameStarted) return;
+
+        Time.timeScale = 1f;
+        pauseMenu.SetActive(false);
+        gameUI.SetActive(true);
     }
 
     public void GameOver()
     {
-        Time.timeScale = 0f;  // Freeze game time
+        isGameStarted = false;
+        Time.timeScale = 0f;
 
-        gameOverMenu.SetActive(true);  // Show game over panel
-        gameUI.SetActive(false);  // Hide game UI
+        gameOverMenu.SetActive(true);
+        gameUI.SetActive(false);
 
-        // Optionally, display score on the Game Over menu
+        // Optionally, display final score
         // gameOverMenu.GetComponentInChildren<Text>().text = "Score: " + score;
     }
 
     public void RestartGame()
     {
-        // Reset the game by reloading the current scene
-        Time.timeScale = 1f;  // Ensure time is running
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);  // Reload the current scene
+        // Reset score and reload current scene
+        Time.timeScale = 1f;
+        score = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    void ShowMainMenu()
+    public void QuitGame()
     {
-        Time.timeScale = 0f;  // Pause game at start
-
-        mainMenu.SetActive(true);  // Show main menu
-        gameUI.SetActive(false);  // Hide game UI
-        pauseMenu.SetActive(false);  // Hide pause menu
-        gameOverMenu.SetActive(false);  // Hide game over menu
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false; // Stop play mode in editor
+        #else
+            Application.Quit(); // Quit standalone build
+        #endif
     }
 
+    private void ShowMainMenu()
+    {
+        isGameStarted = false;
+        Time.timeScale = 0f;
+
+        mainMenu.SetActive(true);
+        gameUI.SetActive(false);
+        pauseMenu.SetActive(false);
+        gameOverMenu.SetActive(false);
+    }
 }
