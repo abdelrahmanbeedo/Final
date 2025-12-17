@@ -11,6 +11,9 @@ public class CarHandler : MonoBehaviour
     [SerializeField] private float maxSpeed = 12f;
     [SerializeField] private float turnRotationSpeed = 80f;
     [SerializeField] private float turnStability = 5f;
+    [SerializeField] private Animator bikeAnimator;
+
+
 
     private Vector2 input;
     private bool isDead = false;
@@ -72,9 +75,14 @@ public class CarHandler : MonoBehaviour
 
     // ---------------- INPUT ----------------
     public void SetInput(Vector2 inputVector)
-    {
-        input = inputVector;
-    }
+{
+    input = inputVector;
+
+    bikeAnimator.SetFloat("Turn", input.x); // -1 left, +1 right
+    bikeAnimator.SetFloat("Speed", rb.linearVelocity.magnitude);
+}
+
+
 
     // ---------------- COLLISION ----------------
     private void OnTriggerEnter(Collider other)
@@ -108,6 +116,7 @@ public class CarHandler : MonoBehaviour
     transform.position = startPosition;
     transform.rotation = startRotation;
 }
+
 
 
 }
