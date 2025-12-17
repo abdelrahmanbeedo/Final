@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,12 +10,19 @@ public class GameManager : MonoBehaviour
     public GameObject gameUI;
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
+    [SerializeField] private TMP_Text finalScoreText;
+    [SerializeField] private TMP_Text timeSurvivedText;
+
+
 
     [Header("Gameplay References")]
     public Transform carSpawnPoint;
 
     [HideInInspector]
     public int score;
+    
+    private float timeSurvived = 0f;
+
 
     private bool isGameStarted = false;
 
@@ -31,36 +39,48 @@ public class GameManager : MonoBehaviour
     }
 
     void Update()
+{
+    if (!isGameStarted || Time.timeScale == 0f) return;
+
+    // Increment score over time
+    score += Mathf.RoundToInt(Time.deltaTime * 10f);
+
+    // Track survival time
+    timeSurvived += Time.deltaTime;
+
+    // Pause toggle
+    if (Input.GetKeyDown(KeyCode.Escape))
     {
-        if (!isGameStarted || Time.timeScale == 0f) return;
-
-        // Increment score over time
-        score += Mathf.RoundToInt(Time.deltaTime * 10f);
-
-        // Pause toggle
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (pauseMenu.activeSelf)
-                ResumeGame();
-            else
-                PauseGame();
-        }
+        if (pauseMenu.activeSelf)
+            ResumeGame();
+        else
+            PauseGame();
     }
+}
+
+
 
     // ===== GAME FLOW =====
-
     public void StartGame()
     {
         score = 0;
         isGameStarted = true;
         Time.timeScale = 1f;
+        timeSurvived = 0f;
 
         mainMenu.SetActive(false);
         gameUI.SetActive(true);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
 
-        // Reset player position or game state if needed
+        // Reset player and level when starting
+        EndlessLevelHandler endless = FindObjectOfType<EndlessLevelHandler>();
+        if (endless != null)
+            endless.ResetLevel();
+
+        CarHandler car = FindObjectOfType<CarHandler>();
+        if (car != null)
+            car.ResetCar(carSpawnPoint.position, carSpawnPoint.rotation);
     }
 
     public void PauseGame()
@@ -82,22 +102,30 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver()
-    {
-        isGameStarted = false;
-        Time.timeScale = 0f;
+{
+    isGameStarted = false;
+    Time.timeScale = 0f;
 
-        gameOverMenu.SetActive(true);
-        gameUI.SetActive(false);
+    gameOverMenu.SetActive(true);
+    gameUI.SetActive(false);
 
-        // Optionally, display final score
-        // gameOverMenu.GetComponentInChildren<TMP_Text>().text = "Score: " + score;
-    }
+    if (finalScoreText != null)
+        finalScoreText.text = "Final Score: " + score;
+
+    if (timeSurvivedText != null)
+        timeSurvivedText.text = "Time Survived: " + Mathf.FloorToInt(timeSurvived) + "s";
+}
+
+
+
+
 
     public void RestartGame()
     {
         score = 0;
         isGameStarted = true;
         Time.timeScale = 1f;
+        timeSurvived = 0f;
 
         mainMenu.SetActive(false);
         gameUI.SetActive(true);
@@ -131,5 +159,14 @@ public class GameManager : MonoBehaviour
         gameUI.SetActive(false);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
+
+        // Reset car and level so player isn't stuck
+        EndlessLevelHandler endless = FindObjectOfType<EndlessLevelHandler>();
+        if (endless != null)
+            endless.ResetLevel();
+
+        CarHandler car = FindObjectOfType<CarHandler>();
+        if (car != null)
+            car.ResetCar(carSpawnPoint.position, carSpawnPoint.rotation);
     }
 }

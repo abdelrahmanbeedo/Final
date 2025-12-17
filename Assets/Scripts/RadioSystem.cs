@@ -16,6 +16,7 @@ public class RadioSystem : MonoBehaviour
         if (index < 0 || index >= songs.Length) return;
         currentSongIndex = index;
         audioSource.clip = songs[currentSongIndex];
+        audioSource.loop = true; // keep looping current track
         audioSource.Play();
     }
 
@@ -30,4 +31,12 @@ public class RadioSystem : MonoBehaviour
         currentSongIndex = (currentSongIndex - 1 + songs.Length) % songs.Length;
         PlaySong(currentSongIndex);
     }
+
+    // 🎚️ Volume control
+    public void SetVolume(float volume)
+{
+    audioSource.volume = volume;
+}
+
+
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1900681226621404113, guid: 7e4d049e6a79539479a2e9e98c071bfe, type: 3}
   speed: 6
-  nearMissDistance: 1
+  nearMissDistance: 1.5
   scoreValue: 100
