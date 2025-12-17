@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;  // Required for scene reload
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +9,9 @@ public class GameManager : MonoBehaviour
     public GameObject gameUI;
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
+
+    [Header("Gameplay References")]
+    public Transform carSpawnPoint;
 
     [HideInInspector]
     public int score;
@@ -88,15 +90,27 @@ public class GameManager : MonoBehaviour
         gameUI.SetActive(false);
 
         // Optionally, display final score
-        // gameOverMenu.GetComponentInChildren<Text>().text = "Score: " + score;
+        // gameOverMenu.GetComponentInChildren<TMP_Text>().text = "Score: " + score;
     }
 
     public void RestartGame()
     {
-        // Reset score and reload current scene
-        Time.timeScale = 1f;
         score = 0;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        isGameStarted = true;
+        Time.timeScale = 1f;
+
+        mainMenu.SetActive(false);
+        gameUI.SetActive(true);
+        pauseMenu.SetActive(false);
+        gameOverMenu.SetActive(false);
+
+        EndlessLevelHandler endless = FindObjectOfType<EndlessLevelHandler>();
+        if (endless != null)
+            endless.ResetLevel();
+
+        CarHandler car = FindObjectOfType<CarHandler>();
+        if (car != null)
+            car.ResetCar(carSpawnPoint.position, carSpawnPoint.rotation);
     }
 
     public void QuitGame()
@@ -108,7 +122,7 @@ public class GameManager : MonoBehaviour
         #endif
     }
 
-    private void ShowMainMenu()
+    public void ShowMainMenu()
     {
         isGameStarted = false;
         Time.timeScale = 0f;

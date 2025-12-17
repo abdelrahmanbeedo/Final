@@ -26,7 +26,11 @@ public class ObstacleSimple : MonoBehaviour
 
         if (!scored && distance < data.nearMissDistance)
         {
-            ScoreSimple.Add(data.scoreValue);
+            // Add score through GameManager instead of ScoreSimple
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.score += data.scoreValue;
+            }
             scored = true;
         }
     }

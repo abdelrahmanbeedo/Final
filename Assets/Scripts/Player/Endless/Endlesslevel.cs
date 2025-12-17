@@ -18,9 +18,15 @@ public class EndlessLevelHandler : MonoBehaviour
     {
         playerCarTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
-        int prefabIndex = 0;
+        CreatePool();
+        SpawnInitialSections();
 
-        // Create pool
+        StartCoroutine(UpdateLessOftenCO());
+    }
+
+    void CreatePool()
+    {
+        int prefabIndex = 0;
         for (int i = 0; i < sectionsPool.Length; i++)
         {
             sectionsPool[i] = Instantiate(sectionsPrefabs[prefabIndex]);
@@ -30,8 +36,10 @@ public class EndlessLevelHandler : MonoBehaviour
             if (prefabIndex >= sectionsPrefabs.Length)
                 prefabIndex = 0;
         }
+    }
 
-        // Spawn initial sections
+    void SpawnInitialSections()
+    {
         for (int i = 0; i < sections.Length; i++)
         {
             GameObject newSection = GetRandomAvailableSection();
@@ -39,8 +47,6 @@ public class EndlessLevelHandler : MonoBehaviour
             newSection.SetActive(true);
             sections[i] = newSection;
         }
-
-        StartCoroutine(UpdateLessOftenCO());
     }
 
     IEnumerator UpdateLessOftenCO()
@@ -73,25 +79,40 @@ public class EndlessLevelHandler : MonoBehaviour
 
     GameObject GetRandomAvailableSection()
     {
-        // First try to find an inactive one randomly
         for (int attempt = 0; attempt < 30; attempt++)
         {
             int randomIndex = Random.Range(0, sectionsPool.Length);
-
             if (!sectionsPool[randomIndex].activeInHierarchy)
                 return sectionsPool[randomIndex];
         }
 
-        // If all are active (unlikely), pick the first inactive
         for (int i = 0; i < sectionsPool.Length; i++)
         {
             if (!sectionsPool[i].activeInHierarchy)
                 return sectionsPool[i];
         }
 
-        // If ALL are active (should never happen)
-        // Return a random one anyway (fallback)
         Debug.LogWarning("All sections are active! Returning a random one.");
         return sectionsPool[Random.Range(0, sectionsPool.Length)];
+    }
+
+    // ===== NEW RESET METHOD =====
+    public void ResetLevel()
+    {
+        // Disable all sections
+        foreach (var section in sectionsPool)
+        {
+            section.SetActive(false);
+        }
+
+        // Respawn initial sections
+        SpawnInitialSections();
+
+        // Reset car position to start
+        if (playerCarTransform != null)
+        {
+            playerCarTransform.position = new Vector3(0, 0.5f, 0); // adjust Y if needed
+            playerCarTransform.rotation = Quaternion.identity;
+        }
     }
 }

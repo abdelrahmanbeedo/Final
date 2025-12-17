@@ -26,24 +26,26 @@ public class CarHandler : MonoBehaviour
 
     // ---------------- ACCELERATION ----------------
     void HandleAcceleration()
+{
+    float forwardSpeed = Vector3.Dot(rb.linearVelocity, transform.forward);
+
+    // Always push forward until maxSpeed
+    if (forwardSpeed < maxSpeed)
     {
-        float forwardSpeed = Vector3.Dot(rb.linearVelocity, transform.forward);
-
-        if (input.y > 0)
-        {
-            if (forwardSpeed < maxSpeed)
-                rb.AddForce(transform.forward * acceleration, ForceMode.Acceleration);
-
-            rb.linearDamping = 0.2f;
-        }
-        else
-        {
-            if (rb.linearVelocity.magnitude > 0.1f)
-                rb.AddForce(-rb.linearVelocity.normalized * braking, ForceMode.Acceleration);
-
-            rb.linearDamping = 0.5f;
-        }
+        rb.AddForce(transform.forward * acceleration, ForceMode.Acceleration);
     }
+
+    // If player presses back (input.y < 0), apply braking
+    if (input.y < 0)
+    {
+        rb.AddForce(-rb.linearVelocity.normalized * braking, ForceMode.Acceleration);
+    }
+
+    // Keep damping low so car keeps rolling smoothly
+    rb.linearDamping = 0.2f;
+}
+
+
 
     // ---------------- STEERING ----------------
     void HandleSteering()
@@ -95,4 +97,17 @@ public class CarHandler : MonoBehaviour
 
         GameManager.Instance.GameOver();
     }
+
+    public void ResetCar(Vector3 startPosition, Quaternion startRotation)
+{
+    isDead = false;
+    rb.isKinematic = false;
+    rb.linearVelocity = Vector3.zero;
+    rb.angularVelocity = Vector3.zero;
+
+    transform.position = startPosition;
+    transform.rotation = startRotation;
+}
+
+
 }
